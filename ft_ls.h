@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 15:51:50 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 21:59:35 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 22:29:59 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef	struct			s_node
 t_node					*sort_by_time_modified(t_node *list, t_node *temp);
 t_node					*sort_ascii(t_node *list);
 t_node					*invert_list(t_node *list);
-t_node					*get_list(DIR *directory, char *dirname);
+t_node					*get_list(DIR *directory, char *dirname, int *options);
 t_node					*sort_list(t_node *list, int *options);
 int						print_list(t_node *list, int *options, char *path);
 int						is_error(char *str, int *options);
@@ -75,5 +75,5 @@ void					add_dir(char *str, char **dirs);
 void					ls_directory(char *name, int *options,
 									int *has_printed);
 void					print_lldendl(long long int n);
-
+void					device_or_size(char c, t_node *no);
 #endif

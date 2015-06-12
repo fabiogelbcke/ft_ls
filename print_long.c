@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 16:29:40 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 22:15:58 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 22:24:06 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,13 +113,7 @@ void		print_acc_group_size(t_node *no, long *sizes, char *path)
 	put_spaces(sizes[3] - i + 2
 			+ sizes[1] - ft_strlen(ft_itoa(no->info.st_size)));
 	c = get_type(no, path);
-	if (c == 'c' || c == 'b')
-	{
-		ft_putnbr(major(no->info.st_rdev));
-		ft_putstr(ft_strjoin(",  ", ft_itoa(minor(no->info.st_rdev))));
-	}
-	else
-		ft_putnbr(no->info.st_size);
+	device_or_size(c, no);
 	ft_putstr(" ");
 }
 

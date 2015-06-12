@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 17:31:43 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 20:53:10 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 22:41:23 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,9 @@ t_node				*sort_list(t_node *list, int *options)
 	current = list;
 	list = sort_ascii(list);
 	if (options[4] == 1)
-	{
 		list = sort_by_time_modified(list, NULL);
-	}
 	else if (options[3] == 1)
-	{
 		list = invert_list(list);
-	}
 	return (list);
 }
 

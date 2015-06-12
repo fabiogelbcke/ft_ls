@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/07 21:57:28 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 22:05:48 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 22:45:22 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int				is_error(char *str, int *options)
 	}
 	path = (strrchr(path, '/')) ? ft_strjoin(path, "/") : ft_strdup(".");
 	directory = opendir(path);
-	list = get_list(directory, ft_strjoin(path, "/"));
+	list = get_list(directory, ft_strjoin(path, "/"), options);
 	while (list)
 	{
 		if (!ft_cmpnocase(str, list->name) || !ft_cmpnocase(name, list->name))
@@ -65,7 +65,7 @@ t_node			*is_file(char *str, t_node *list, int *options, char **dirs)
 		path = ft_strdup(".");
 	ptr = list;
 	directory = opendir(path);
-	curr = get_list(directory, ft_strjoin(path, "/"));
+	curr = get_list(directory, ft_strjoin(path, "/"), options);
 	while (curr)
 	{
 		curr->str = ft_strdup(str);
@@ -126,8 +126,8 @@ void			print_files(t_node *list, int *options, int *has_printed)
 	t_node		*ptr;
 
 	ptr = list;
-	if (options[4] == 1)
-		list = sort_by_time_modified(list, NULL);
+	if (options[4])
+		sort_by_time_modified(list, NULL);
 	while (ptr)
 	{
 		if (options[0] == 0)

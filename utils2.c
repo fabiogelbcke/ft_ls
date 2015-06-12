@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/12 21:12:57 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 21:50:15 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 22:45:46 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,9 @@ void			ls_directory(char *name, int *options, int *has_printed)
 		perror("ft_ls:");
 		return ;
 	}
-	if (name[0] != '/' && name[0] != '~')
-		path = ft_strjoin(ft_strjoin("./", name), "/");
-	else
-		path = ft_strjoin(name, "/");
-	list = get_list(directory, path);
-	list = sort_list(list, options);
+	path = (name[0] != '/' && name[0] != '~') ?
+		ft_strjoin(ft_strjoin("./", name), "/") : ft_strjoin(name, "/");
+	list = get_list(directory, path, options);
 	items = print_list(list, options, path);
 	*has_printed = 1;
 	if (options[1])
@@ -100,4 +97,15 @@ void			ls_directories(char **dirs, int *options, int *has_printed)
 		ls_directory(dirs[i], options, has_printed);
 		i++;
 	}
+}
+
+void			device_or_size(char c, t_node *no)
+{
+	if (c == 'c' || c == 'b')
+	{
+		ft_putnbr(major(no->info.st_rdev));
+		ft_putstr(ft_strjoin(",  ", ft_itoa(minor(no->info.st_rdev))));
+	}
+	else
+		ft_putnbr(no->info.st_size);
 }

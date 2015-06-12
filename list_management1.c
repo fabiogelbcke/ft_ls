@@ -6,13 +6,13 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 16:15:58 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 21:57:56 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 22:44:51 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_node				*get_list(DIR *directory, char *dirname)
+t_node				*get_list(DIR *directory, char *dirname, int *options)
 {
 	t_node			*head;
 	t_node			*new;
@@ -20,11 +20,11 @@ t_node				*get_list(DIR *directory, char *dirname)
 	t_node			*current;
 	char			buf[1024];
 
-	current = NULL;
+	head = NULL;
 	while (directory && (entry = readdir(directory)))
 	{
 		new = (t_node*)malloc(sizeof(t_node));
-		if (current)
+		if (head)
 			current->next = new;
 		else
 			head = new;
@@ -43,7 +43,9 @@ t_node				*get_list(DIR *directory, char *dirname)
 		}
 		stat(ft_strjoin(dirname, entry->d_name), &(current->linkinfo));
 	}
-	return (directory) ? (head) : NULL;
+	if (head)
+		head = sort_list (head, options);
+	return (directory) ? (head) : (NULL);
 }
 
 t_node				*sort_by_time_modified(t_node *list, t_node *temp)
