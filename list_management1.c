@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 16:15:58 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 22:44:51 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 23:49:32 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ t_node				*get_list(DIR *directory, char *dirname, int *options)
 	t_node			*new;
 	struct dirent	*entry;
 	t_node			*current;
-	char			buf[1024];
 
 	head = NULL;
 	while (directory && (entry = readdir(directory)))
@@ -28,14 +27,8 @@ t_node				*get_list(DIR *directory, char *dirname, int *options)
 			current->next = new;
 		else
 			head = new;
-		new->next = NULL;
-		new->name = ft_strdup(entry->d_name);
-		new->path = NULL;
-		new->str = NULL;
+		set_new(new, ft_strdup(entry->d_name), dirname, &current);
 		new->data = entry;
-		current = new;
-		new->extattr = (listxattr(ft_strjoin(dirname, entry->d_name)
-					, buf, 1024, XATTR_NOFOLLOW) > 0) ? 1 : 0;
 		if (lstat((ft_strjoin(dirname, entry->d_name)), &(current->info)) < 0)
 		{
 			perror("");

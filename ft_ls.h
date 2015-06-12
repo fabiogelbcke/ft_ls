@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 15:51:50 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 23:40:15 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 23:50:14 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,6 @@ int						folder_condition(t_node *curr, int *options,
 										char *str, char *path);
 t_node					*add_to_end(t_node *list, t_node *ptr, t_node *curr);
 t_node					*call_add_dir(char *str, char **dirs, t_node *list);
-
+void					set_new(t_node *new, char *name, char *dirname,
+								t_node **current);
 #endif

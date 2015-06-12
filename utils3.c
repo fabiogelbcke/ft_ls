@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/12 22:48:53 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 23:39:50 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 23:50:24 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,17 @@ t_node	*call_add_dir(char *str, char **dirs, t_node *list)
 {
 	add_dir(str, dirs);
 	return (list);
+}
+
+void	set_new(t_node *new, char *name, char *dirname, t_node **current)
+{
+	char buf[1024];
+
+	new->next = NULL;
+	new->name = ft_strdup(name);
+	new->path = NULL;
+	new->str = NULL;
+	new->extattr = (listxattr(ft_strjoin(dirname, name)
+							, buf, 1024, XATTR_NOFOLLOW) > 0) ? 1 : 0;
+	*current = new;
 }
