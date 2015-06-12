@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/07 21:57:28 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 23:39:39 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/13 00:23:32 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ int				is_error(char *str, int *options)
 		return (0);
 	path = ft_strdup(str);
 	name = ft_strdup(str);
-	if (strrchr(path, '/'))
+	if (ft_strrchr(path, '/'))
 	{
-		name = strrchr(path, '/');
+		name = ft_strrchr(path, '/');
 		*(name++) = '\0';
 	}
-	path = (strrchr(path, '/')) ? ft_strjoin(path, "/") : ft_strdup(".");
+	path = (ft_strrchr(path, '/')) ? ft_strjoin(path, "/") : ft_strdup(".");
 	directory = opendir(path);
 	list = get_list(directory, ft_strjoin(path, "/"), options);
 	while (list)

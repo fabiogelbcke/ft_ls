@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/09 18:36:02 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 20:40:05 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/13 00:15:49 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,37 +19,17 @@ int				*get_options(int ac, char **av)
 	int			*options;
 
 	options = malloc(sizeof(int) * 8);
-	i = 0;
-	while (i < 8)
-		options[i++] = 0;
+	ft_memset(options, 0, sizeof(int) * 8);
 	i = 1;
 	while (i < ac && av[i][0] == '-' && ft_strlen(av[i]) > 1)
 	{
 		j = 1;
 		while (av[i][j])
 		{
+			set_options(options, av[i][j], &j, av[i]);
 			if (!(ft_strrchr("lRart1sT", av[i][j]) ||
 				!ft_strcmp(av[i], "--")))
-			{
-				options[0] = -1;
-				options[1] = av[1][j];
 				return (options);
-			}
-			if (av[i][j] == 'l' || av[i][j] == '1')
-				options[0] = (av[i][j] == 'l') ? 1 : 0;
-			else if (av[i][j] == 'R')
-				options[1] = 1;
-			else if (av[i][j] == 'a')
-				options[2] = 1;
-			else if (av[i][j] == 'r')
-				options[3] = 1;
-			else if (av[i][j] == 't')
-				options[4] = 1;
-			else if (av[i][j] == 's')
-				options[5] = 1;
-			else if (av[i][j] == 'T')
-				options[7] = 1;
-			j++;
 		}
 		i++;
 		if (!ft_strcmp(av[i - 1], "--"))

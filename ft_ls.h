@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 15:51:50 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 23:50:14 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/13 00:16:07 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,6 @@ t_node					*add_to_end(t_node *list, t_node *ptr, t_node *curr);
 t_node					*call_add_dir(char *str, char **dirs, t_node *list);
 void					set_new(t_node *new, char *name, char *dirname,
 								t_node **current);
+void					set_size_5(t_node *no, long *size_5);
+void					set_options(int *options, char c, int *j, char *str);
 #endif

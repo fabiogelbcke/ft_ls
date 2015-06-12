@@ -11,6 +11,7 @@ SRC =	ft_ls.c \
 	utils.c \
 	utils2.c \
 	utils3.c \
+	utils4.c \
 
 OBJ	= $(SRC:.c=.o)
 
@@ -23,6 +24,9 @@ all:		$(NAME)
 $(NAME):	$(OBJ)
 	$(MAKE) -C ./libft
 	$(CC) -o $(NAME) $(FLAGS) $(OBJ) $(LIB)
+
+test:
+	git clone https://github.com/yyang42/moulitest.git
 
 clean:
 	rm -f $(OBJ)

@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/12 22:48:53 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 23:50:24 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/13 00:23:54 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	set_pointers(char **path, char **name, char **str, DIR **directory)
 {
 	(*path) = ft_strdup((*str));
 	(*name) = ft_strdup((*str));
-	if (strrchr((*path), '/'))
+	if (ft_strrchr((*path), '/'))
 	{
-		(*name) = strrchr((*path), '/');
+		(*name) = ft_strrchr((*path), '/');
 		*((*name)++) = '\0';
 		(*path) = ft_strjoin((*path), "/");
 	}

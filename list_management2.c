@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 17:31:43 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 22:41:23 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/13 00:04:54 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,7 @@ long int			*get_sizes(t_node *no, int *options)
 				sizes[3] = ft_strlen(getgrgid(no->info.st_gid)->gr_name);
 			else if (sizes[3] < ft_strlen(ft_itoa(no->info.st_gid)))
 				sizes[3] = ft_strlen(ft_itoa(no->info.st_gid));
-			if (getpwuid(no->info.st_uid)
-				&& sizes[5] < ft_strlen(getpwuid(no->info.st_uid)->pw_name))
-				sizes[5] = ft_strlen(getpwuid(no->info.st_uid)->pw_name);
-			else if (sizes[5] < ft_strlen(ft_llitoa(no->info.st_uid)))
-				sizes[5] = ft_strlen(ft_llitoa(no->info.st_uid));
+			set_size_5(no, &(sizes[5]));
 		}
 		no = no->next;
 	}
