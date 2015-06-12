@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 17:31:43 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/09 21:14:42 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 16:14:21 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ t_node				*sort_list(t_node *list, int *options)
 	t_node			*current;
 
 	current = list;
+	list = sort_ascii(list);
 	if (options[4] == 1)
+	{
 		list = sort_by_time_modified(list, NULL);
+	}
 	else if (options[3] == 1)
 	{
-		list = sort_ascii(list);
 		list = invert_list(list);
 	}
-	else
-		list = sort_ascii(list);
 	return (list);
 }
 
@@ -84,4 +84,26 @@ long int			*get_sizes(t_node *current, int *options)
 		current = current->next;
 	}
 	return (sizes);
+}
+
+void				change_pointers(void **ptr1, void **ptr2)
+{
+	void			*tmp;
+
+	tmp = *ptr1;
+	*ptr1 = *ptr2;
+	*ptr2 = tmp;
+}
+
+void				change_nodes(t_node *no1, t_node *no2)
+{
+	char *tmp;
+	change_pointers((void**)&(no1->data), (void**)&(no2->data));
+	change_pointers((void**)&(no1->info), (void**)&(no2->info));
+	change_pointers((void**)&(no1->linkinfo), (void**)&(no2->linkinfo));
+	change_pointers((void**)&(no1->str), (void**)&(no2->str));
+	tmp = ft_strdup(no1->name);
+	no1->name = ft_strdup(no2->name);
+	no2->name = tmp;
+	change_pointers((void**)&(no1->path), (void**)&(no2->path));
 }

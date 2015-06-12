@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/07 21:57:28 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/09 19:14:28 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 18:38:27 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,34 @@
 
 int				is_error(char *str, int *options)
 {
-	DIR			*directory;
-	t_node		*list;
-	int			i;
+    DIR         *directory;
+    t_node      *list;
+    char        *path;
+    char        *name;
 
-	i = 0;
-	directory = opendir(".");
-	list = get_list(directory, "./");
-	while (list)
-	{
-		if (!ft_strcmp(str, list->name))
-			return (0);
-		list = list->next;
-	}
-	if (opendir(str))
-		return (0);
-	return (1);
+    if (str && (!ft_strcmp("./", str) || !ft_strcmp("/", str)))
+        return (0);
+    path = ft_strdup(str);
+    name = ft_strdup(str);
+    if (strrchr(path, '/'))
+    {
+        name = strrchr(path, '/');
+        *(name++) = '\0';
+        path = ft_strjoin(path, "/");
+    }
+    else
+        path = ft_strdup(".");
+    directory = opendir(path);
+    list = get_list(directory, ft_strjoin(path, "/"));
+    while (list)
+    {
+        if (!ft_cmpnocase(str, list->name) || !ft_cmpnocase(name, list->name))
+            return (0);
+        list = list->next;
+    }
+    if (opendir(str))
+        return (0);
+    return (1);
 }
 
 void add_dir(char *str, char **dirs)
@@ -53,8 +65,11 @@ t_node			*is_file(char *str, t_node *list, int *options, char **dirs)
 
 	path = ft_strdup(str);
 	name = ft_strdup(str);
-	if (!ft_strcmp("./", str))
+	if (!ft_strcmp("./", str) || !ft_strcmp("/", str))
+	{
 		add_dir(str, dirs);
+		return (list);
+	}
 	if (strrchr(path, '/'))
 	{
 		name = strrchr(path, '/');
@@ -115,9 +130,8 @@ char			**dirs_table(int ac, int *options, char **av)
 void			print_errors(char **errors, int *has_printed)
 {
 	int			i;
-	int			*fakeoptions;
+	int			fakeoptions[6];
 
-	fakeoptions = malloc(sizeof(int) * 6);
 	fakeoptions[3] = 0;
 	i = 0;
 	if (errors[0] && errors[1])
@@ -156,7 +170,10 @@ void			print_files(t_node *list, int *options, int *has_printed)
 			print_long(ptr, get_sizes(list, options), options, ptr->path);
 		*has_printed = 1;
 		if (errno == 13)
+		{
+			ft_putstr("oi");
 			perror(ft_strjoin("ls: ", ptr->name));
+		}
 		ptr = ptr->next;
 	}
 }

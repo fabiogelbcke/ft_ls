@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 15:45:33 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/09 20:57:27 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 18:33:43 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,16 @@ void			sort_dirs(char **dirs, int *options)
 {
 	int			i;
 	char		*temp;
-	char		*str1;
-	char		*str3;
 
 	i = 0;
 	while (dirs[i] && dirs[i + 1])
 	{
-		str1 = ft_strdup(dirs[i]);
-		str3 = ft_strdup(dirs[i + 1]);
-		if ((ft_strcmp(str1, str3) > 0 && options[3] == 0)
-		    ||(ft_strcmp(str1,str3) < 0 && options[3] == 1))
+		if ((ft_strcmp(dirs[i], dirs[i + 1]) > 0 && options[3] == 0)
+		    ||(ft_strcmp(dirs[i], dirs[i + 1]) < 0 && options[3] == 1))
 		{
-			temp = ft_strdup(dirs[i + 1]);
-			dirs[i + 1] = ft_strdup(dirs[i]);
-			dirs[i] = ft_strdup(temp);
+			temp = (dirs[i + 1]);
+			dirs[i + 1] = (dirs[i]);
+			dirs[i] = (temp);
 			i = 0;
 		}
 		else
@@ -83,7 +79,7 @@ void			ls_directories(char **dirs, int *options, int *has_printed)
 	{
 		if (*has_printed == 1)
 			ft_putstr("\n");
-		while (ft_strstr(dirs[i], "././"))
+		while (ft_strstr(dirs[i], "././") || ft_strstr(dirs[i] , ".//"))
 			dirs[i] += 2;
 		ft_putstr(dirs[i]);
 		ft_putstr(":");
@@ -114,7 +110,6 @@ void handle_args(int ac, char **av, int *options, int *has_printed)
 	dirs = malloc(sizeof(char*) * (ac));
 	while (++i + options[6] < ac)
 		not_error = is_file(av[i + options [6]], not_error, options, dirs);
-	//dirs = dirs_table(ac, options, av);
 	print_errors(errors, has_printed);
 	if (not_error)
 		not_error = sort_ascii(not_error);

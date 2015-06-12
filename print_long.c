@@ -6,18 +6,18 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 16:29:40 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/09 21:13:25 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 17:57:50 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		print_permissions(t_node *no, int size_links)
+void		print_permissions(t_node *no, int size_links, char *path)
 {
 	int		i;
 
 	i = size_links + 2 - ft_strlen(ft_itoa(no->info.st_nlink));
-	ft_putchar(get_type(no));
+	ft_putchar(get_type(no, path));
 	ft_putstr((no->info.st_mode & S_IRUSR) ? "r" : "-");
 	ft_putstr((no->info.st_mode & S_IWUSR) ? "w" : "-");
 	if (no->info.st_mode & S_ISUID)
@@ -97,10 +97,10 @@ void		print_time(t_node *no, int *options)
 	ft_putchar(' ');
 }
 
-void		print_acc_group_size(t_node *no, long *sizes)
+void		print_acc_group_size(t_node *no, long *sizes, char *path)
 {
 	int		i;
-
+	char c;
 
 	i = (getpwuid(no->info.st_uid)) ? ft_strlen(getpwuid(no->info.st_uid)->pw_name)
 		: ft_strlen(ft_itoa(no->info.st_uid));
@@ -117,14 +117,15 @@ void		print_acc_group_size(t_node *no, long *sizes)
 	i = (getgrgid(no->info.st_gid)) ? ft_strlen(getgrgid(no->info.st_gid)->gr_name)
 		: ft_strlen(ft_itoa(no->info.st_gid));
 	put_spaces(sizes[3] - i + 2 + sizes[1] - ft_strlen(ft_itoa(no->info.st_size)));
-	if (minor(no->info.st_rdev) == 0 && major(no->info.st_rdev) == 0)
-		ft_putnbr(no->info.st_size);
-	else
+	c = get_type(no, path);
+	if (c == 'c' || c == 'b')
 	{
-		ft_putnbr(minor(no->info.st_rdev));
-		ft_putstr(",  ");
 		ft_putnbr(major(no->info.st_rdev));
+		ft_putstr(",  ");
+		ft_putnbr(minor(no->info.st_rdev));
 	}
+	else
+		ft_putnbr(no->info.st_size);
 	ft_putstr(" ");
 }
 
@@ -134,8 +135,10 @@ void		print_link(t_node *no, char *path)
 	ssize_t	len;
 
 	if (!ft_strcmp(".", path))
-		path = ft_strdup("");
+        path = ft_strdup("");
 	len = readlink(ft_strjoin(path, no->name), buf, sizeof(buf));
+	if (len == -1)
+		return ;
 	buf[len] = '\0';
 	ft_putstr(" -> ");
 	ft_putstr(buf);
@@ -143,15 +146,14 @@ void		print_link(t_node *no, char *path)
 
 void		print_long(t_node *no, long *sizes, int *options, char *path)
 {
-	print_permissions(no, sizes[0]);
+	print_permissions(no, sizes[0], path);
 	ft_putnbr(no->info.st_nlink);
-	print_acc_group_size(no, sizes);
+	print_acc_group_size(no, sizes, path);
 	print_time(no, options);
 	if (no->str)
 		ft_putstr(no->str);
 	else
 		ft_putstr(no->name);
-	if (no->data->d_type == DT_LNK)
-		print_link(no, path);
+	print_link(no, path);
 	ft_putchar('\n');
 }

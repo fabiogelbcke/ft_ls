@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 16:15:58 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/09 21:18:51 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 15:53:29 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,14 @@ t_node				*get_list(DIR *directory, char *dirname)
 	current = NULL;
 	while (directory && (entry = readdir(directory)))
 	{
-		new = malloc(sizeof(t_node));
+		new = (t_node*)malloc(sizeof(t_node));
 		if (current)
 			current->next = new;
 		else
 			head = new;
 		new->next = NULL;
-		new->name = entry->d_name;
+		new->name = ft_strdup(entry->d_name);
+//		ft_putstr(new->name);
 		new->path = NULL;
 		new->str = NULL;
 		new->data = entry;
@@ -42,8 +43,6 @@ t_node				*get_list(DIR *directory, char *dirname)
 		}
 		stat(ft_strjoin(dirname, entry->d_name), &(current->linkinfo));
 	}
-	if (directory)
-		head = sort_ascii(head);
 	return (directory) ? (head) : NULL;
 }
 
@@ -97,11 +96,14 @@ t_node				*sort_ascii(t_node *list)
 			temp->next = current;
 			current = list;
 			prev = NULL;
+/*			change_nodes(current, current->next);
+			current = list;
+			prev = NULL;*/
 		}
 		else
 		{
+			prev = current;
 			current = current->next;
-			prev = (prev) ? prev->next : list;
 		}
 	return (list);
 }

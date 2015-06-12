@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/09 18:36:02 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/09 19:40:49 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 16:45:44 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,13 @@ void			put_spaces(int n)
 		ft_putchar(' ');
 }
 
-char			get_type(t_node *no)
+char			get_type(t_node *no, char *path)
 {
-	if (no->data->d_type == DT_LNK)
+	char		buf[512];
+
+	if (!ft_strcmp(".", path))
+        path = ft_strdup("");
+	if (readlink(ft_strjoin(path, no->name), buf, sizeof(buf)) != -1)
 		return ('l');
 	if (S_ISBLK(no->info.st_mode))
 		return ('b');
