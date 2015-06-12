@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/07 21:57:28 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 18:38:27 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 18:56:46 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int				is_error(char *str, int *options)
     char        *path;
     char        *name;
 
-    if (str && (!ft_strcmp("./", str) || !ft_strcmp("/", str)))
+    if (opendir(str) || !ft_strcmp("./", str) || !ft_strcmp("/", str))
         return (0);
     path = ft_strdup(str);
     name = ft_strdup(str);
@@ -39,8 +39,6 @@ int				is_error(char *str, int *options)
             return (0);
         list = list->next;
     }
-    if (opendir(str))
-        return (0);
     return (1);
 }
 
