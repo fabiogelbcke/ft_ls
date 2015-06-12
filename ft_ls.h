@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 15:51:50 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 16:40:26 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 20:09:36 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ t_node					*is_file(char *str, t_node *list, int *options, char **dirs);
 long int				*get_sizes(t_node *current, int *options);
 char					get_type(t_node *no, char *path);
 void					change_nodes(t_node *no1, t_node *no2);
+void					print_link(t_node *no, char *path);
 
 #endif

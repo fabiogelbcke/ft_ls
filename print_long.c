@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 16:29:40 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 19:52:24 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 20:09:14 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,11 @@ void		print_time(t_node *no, int *options)
 	time_t	sec;
 
 	sec = no->info.st_mtimespec.tv_sec;
-	timestr = malloc(27 * sizeof(char));
+	timestr = malloc(sizeof(char) * 27);
 	timestr = ft_strcpy(timestr, ctime(&sec));
 	if (options[7] == 1)
 	{
-		ft_putendl(ft_strsub(timestr, 4, 20));
+		ft_putstr(ft_strjoin(ft_strsub(timestr, 4, 20), " "));
 		return ;
 	}
 	timestr = remove_extra_spaces(timestr);
@@ -82,11 +82,9 @@ void		print_time(t_node *no, int *options)
 	todaystr = ctime(&sectoday);
 	ft_putstr(ft_strsub(timestr, 4, 6));
 	if ((ft_strcmp(ft_strsub(timestr, 20, 4), ft_strsub(todaystr, 20, 4))
-	     && (sectoday - sec > 15768000)) || sec > sectoday)
-	{
-		ft_putstr("  ");
-		ft_putstr(ft_strsub(timestr, 20, ft_strlen(timestr) - 20));
-	}
+		&& (sectoday - sec > 15768000)) || sec > sectoday)
+		ft_putstr(ft_strjoin("  ", ft_strsub(timestr, 20
+										, ft_strlen(timestr) - 20)));
 	else
 		ft_putstr(ft_strjoin(" ", ft_strsub(timestr, 11, 5)));
 	ft_putchar(' ');
@@ -95,7 +93,7 @@ void		print_time(t_node *no, int *options)
 void		print_acc_group_size(t_node *no, long *sizes, char *path)
 {
 	int		i;
-	char c;
+	char	c;
 
 	i = (getpwuid(no->info.st_uid)) ? ft_strlen(getpwuid(no->info.st_uid)->pw_name)
 		: ft_strlen(ft_itoa(no->info.st_uid));
@@ -122,21 +120,6 @@ void		print_acc_group_size(t_node *no, long *sizes, char *path)
 	else
 		ft_putnbr(no->info.st_size);
 	ft_putstr(" ");
-}
-
-void		print_link(t_node *no, char *path)
-{
-	char	buf[1024];
-	ssize_t	len;
-
-	if (!ft_strcmp(".", path))
-        path = ft_strdup("");
-	len = readlink(ft_strjoin(path, no->name), buf, sizeof(buf));
-	if (len == -1)
-		return ;
-	buf[len] = '\0';
-	ft_putstr(" -> ");
-	ft_putstr(buf);
 }
 
 void		print_long(t_node *no, long *sizes, int *options, char *path)

@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/09 18:36:02 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 19:46:41 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 20:10:47 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,19 @@ char			get_type(t_node *no, char *path)
 	else if (no->info.st_mode & S_IFDIR)
 		return ('d');
 	return ('-');
+}
+
+void			print_link(t_node *no, char *path)
+{
+	char		buf[1024];
+	ssize_t		len;
+
+	if (!ft_strcmp(".", path))
+		path = ft_strdup("");
+	len = readlink(ft_strjoin(path, no->name), buf, sizeof(buf));
+	if (len == -1)
+		return ;
+	buf[len] = '\0';
+	ft_putstr(" -> ");
+	ft_putstr(buf);
 }
