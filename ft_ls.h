@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 15:51:50 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 20:09:36 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 21:59:35 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ typedef	struct			s_node
 	struct stat			info;
 	struct s_node		*next;
 	struct stat			linkinfo;
-	char			*name;
-	char			*path;
-	char			*str;
-	int			extattr;
+	char				*name;
+	char				*path;
+	char				*str;
+	int					extattr;
 }						t_node;
 
 t_node					*sort_by_time_modified(t_node *list, t_node *temp);
@@ -48,7 +48,7 @@ int						print_list(t_node *list, int *options, char *path);
 int						is_error(char *str, int *options);
 int						*get_options(int ac, char **av);
 void					print_long(t_node *no, long *sizes,
-						   int *options, char *path);
+								int *options, char *path);
 void					print_lld(long long int n);
 char					**get_dirs(DIR *directory, char *dirname,
 							int items, int *options);
@@ -65,10 +65,15 @@ void					print_dirs(int ac, char **dirs, int *options,
 									int *has_printed);
 void					sort_dirs(char **dirs, int *options);
 void					put_spaces(int n);
-t_node					*is_file(char *str, t_node *list, int *options, char **dirs);
-long int				*get_sizes(t_node *current, int *options);
+t_node					*is_file(char *str, t_node *list,
+								int *options, char **dirs);
+long int				*get_sizes(t_node *no, int *options);
 char					get_type(t_node *no, char *path);
 void					change_nodes(t_node *no1, t_node *no2);
 void					print_link(t_node *no, char *path);
+void					add_dir(char *str, char **dirs);
+void					ls_directory(char *name, int *options,
+									int *has_printed);
+void					print_lldendl(long long int n);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 16:29:40 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 20:13:26 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 22:15:58 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ void		print_permissions(t_node *no, int size_links, char *path)
 		ft_putstr((no->info.st_mode & S_IXOTH) ? "x" : "-");
 	if (no->extattr && i--)
 		ft_putchar('@');
-	while (i-- > 0)
-		ft_putchar(' ');
+	put_spaces(i);
 }
 
 char		*remove_extra_spaces(char *str)
@@ -117,8 +116,7 @@ void		print_acc_group_size(t_node *no, long *sizes, char *path)
 	if (c == 'c' || c == 'b')
 	{
 		ft_putnbr(major(no->info.st_rdev));
-		ft_putstr(",  ");
-		ft_putnbr(minor(no->info.st_rdev));
+		ft_putstr(ft_strjoin(",  ", ft_itoa(minor(no->info.st_rdev))));
 	}
 	else
 		ft_putnbr(no->info.st_size);

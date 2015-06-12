@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/21 07:58:46 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/08 11:58:00 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 21:55:25 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,10 @@ void				print_lld(long long int n)
 
 	str = ft_llitoa(n);
 	ft_putstr(str);
+}
+
+void				print_lldendl(long long int n)
+{
+	print_lld(n);
+	ft_putchar('\n');
 }

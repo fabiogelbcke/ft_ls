@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/07 21:57:28 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 18:56:46 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 22:05:48 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,30 @@
 
 int				is_error(char *str, int *options)
 {
-    DIR         *directory;
-    t_node      *list;
-    char        *path;
-    char        *name;
+	DIR			*directory;
+	t_node		*list;
+	char		*name;
+	char		*path;
 
-    if (opendir(str) || !ft_strcmp("./", str) || !ft_strcmp("/", str))
-        return (0);
-    path = ft_strdup(str);
-    name = ft_strdup(str);
-    if (strrchr(path, '/'))
-    {
-        name = strrchr(path, '/');
-        *(name++) = '\0';
-        path = ft_strjoin(path, "/");
-    }
-    else
-        path = ft_strdup(".");
-    directory = opendir(path);
-    list = get_list(directory, ft_strjoin(path, "/"));
-    while (list)
-    {
-        if (!ft_cmpnocase(str, list->name) || !ft_cmpnocase(name, list->name))
-            return (0);
-        list = list->next;
-    }
-    return (1);
-}
-
-void add_dir(char *str, char **dirs)
-{
-	int i;
-
-	i = 0;
-	while (dirs[i])
-		i++;
-	dirs[i] = ft_strdup(str);
-	dirs[i + 1] = NULL;
+	if (opendir(str) || !ft_strcmp("./", str) || !ft_strcmp("/", str))
+		return (0);
+	path = ft_strdup(str);
+	name = ft_strdup(str);
+	if (strrchr(path, '/'))
+	{
+		name = strrchr(path, '/');
+		*(name++) = '\0';
+	}
+	path = (strrchr(path, '/')) ? ft_strjoin(path, "/") : ft_strdup(".");
+	directory = opendir(path);
+	list = get_list(directory, ft_strjoin(path, "/"));
+	while (list)
+	{
+		if (!ft_cmpnocase(str, list->name) || !ft_cmpnocase(name, list->name))
+			return (0);
+		list = list->next;
+	}
+	return (1);
 }
 
 t_node			*is_file(char *str, t_node *list, int *options, char **dirs)
@@ -85,7 +72,9 @@ t_node			*is_file(char *str, t_node *list, int *options, char **dirs)
 		curr->path = path;
 		if (!ft_cmpnocase(str, curr->name) || !ft_cmpnocase(name, curr->name))
 		{
-			if ((options[0] == 0 && ((curr->linkinfo.st_mode) && (curr->linkinfo.st_mode & S_IFDIR))) || (opendir(str) && curr->data->d_type == DT_DIR))
+			if ((options[0] == 0 && ((curr->linkinfo.st_mode)
+				&& (curr->linkinfo.st_mode & S_IFDIR))) || (opendir(str)
+				&& curr->data->d_type == DT_DIR))
 				add_dir(str, dirs);
 			else if (list)
 			{
@@ -105,24 +94,6 @@ t_node			*is_file(char *str, t_node *list, int *options, char **dirs)
 		curr = curr->next;
 	}
 	return (list);
-}
-
-char			**dirs_table(int ac, int *options, char **av)
-{
-	char		**dirs;
-	int			i;
-	int			j;
-
-	dirs = malloc(sizeof(char) * ac);
-	i = -1;
-	j = 0;
-	while (++i + options[6] < ac)
-	{
-		if (opendir(av[i + options[6]]))
-			dirs[j++] = ft_strdup(av[i + options[6]]);
-	}
-	dirs[j] = NULL;
-	return (dirs);
 }
 
 void			print_errors(char **errors, int *has_printed)

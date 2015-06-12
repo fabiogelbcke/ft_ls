@@ -2,22 +2,12 @@
 
 int ft_cmpnocase(char *s1, char *s2)
 {
-	while (*s1 && *s2)
+	while(*s1 && *s2)
 	{
-		if (*s1 == *s2
-		    || (ft_isupper(*s1) && ft_islower(*s2) && *s1 + 32 = *s2)
-		    || (ft_islower(*s1) && ft_isupper(*s1) && *s2 + 32 = *s1))
-		{
-			s1++;
-			s2++;
-		}
-		else
-			return (10);
+		if (ft_toupper(*s1) != ft_toupper(*s2))
+			return (*s1 - *s2);
+		s1++;
+		s2++;
 	}
-       if (*s1 == *s2
-	   || (ft_isupper(*s1) && ft_islower(*s2) && *s1 + 32 = *s2 )
- 9         || (ft_islower(*s1) && ft_isupper(*s1) && *s2 + 32 = *s1 ))
-	       return (0);
-       else
-	       return (10);
+	return (*s1 - *s2);
 }

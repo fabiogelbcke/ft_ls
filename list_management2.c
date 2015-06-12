@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 17:31:43 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 16:14:21 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 20:53:10 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,38 +50,33 @@ t_node				*sort_list(t_node *list, int *options)
 	return (list);
 }
 
-long int			*get_sizes(t_node *current, int *options)
+long int			*get_sizes(t_node *no, int *options)
 {
 	long int		*sizes;
 
 	sizes = malloc(sizeof(long int) * 6);
-	sizes[0] = 0;
-	sizes[1] = 0;
-	sizes[2] = 0;
-	sizes[3] = 0;
-	sizes[4] = 0;
-	sizes[5] = 0;
-	while(current)
+	ft_memset(sizes, 0, sizeof(long int) * 6);
+	while (no)
 	{
-		if ((current->name)[0] != '.' || options[2] == 1)
+		if ((no->name)[0] != '.' || options[2] == 1)
 		{
-			if (ft_strlen(ft_itoa(current->info.st_nlink)) > sizes[0])
-				sizes[0] = ft_strlen(ft_itoa(current->info.st_nlink));
-			if (ft_strlen(ft_itoa(current->info.st_size)) > sizes[1])         
-				sizes[1] = ft_strlen(ft_itoa(current->info.st_size));
-				sizes[2] += current->info.st_blocks;
-			if (getgrgid(current->info.st_gid)
-				&& sizes[3] < ft_strlen(getgrgid(current->info.st_gid)->gr_name))
-				sizes[3] = ft_strlen(getgrgid(current->info.st_gid)->gr_name);
-			else if (sizes[3] < ft_strlen(ft_itoa(current->info.st_gid)))
-				sizes[3] = ft_strlen(ft_itoa(current->info.st_gid));
-			if (getpwuid(current->info.st_uid)
-				&& sizes[5] < ft_strlen(getpwuid(current->info.st_uid)->pw_name))
-				sizes[5] = ft_strlen(getpwuid(current->info.st_uid)->pw_name);
-			else if (sizes[5] < ft_strlen(ft_llitoa(current->info.st_uid)))
-				sizes[5] = ft_strlen(ft_llitoa(current->info.st_uid));
+			if (ft_strlen(ft_itoa(no->info.st_nlink)) > sizes[0])
+				sizes[0] = ft_strlen(ft_itoa(no->info.st_nlink));
+			if (ft_strlen(ft_itoa(no->info.st_size)) > sizes[1])
+				sizes[1] = ft_strlen(ft_itoa(no->info.st_size));
+			sizes[2] += no->info.st_blocks;
+			if (getgrgid(no->info.st_gid)
+				&& sizes[3] < ft_strlen(getgrgid(no->info.st_gid)->gr_name))
+				sizes[3] = ft_strlen(getgrgid(no->info.st_gid)->gr_name);
+			else if (sizes[3] < ft_strlen(ft_itoa(no->info.st_gid)))
+				sizes[3] = ft_strlen(ft_itoa(no->info.st_gid));
+			if (getpwuid(no->info.st_uid)
+				&& sizes[5] < ft_strlen(getpwuid(no->info.st_uid)->pw_name))
+				sizes[5] = ft_strlen(getpwuid(no->info.st_uid)->pw_name);
+			else if (sizes[5] < ft_strlen(ft_llitoa(no->info.st_uid)))
+				sizes[5] = ft_strlen(ft_llitoa(no->info.st_uid));
 		}
-		current = current->next;
+		no = no->next;
 	}
 	return (sizes);
 }
@@ -98,6 +93,7 @@ void				change_pointers(void **ptr1, void **ptr2)
 void				change_nodes(t_node *no1, t_node *no2)
 {
 	char *tmp;
+
 	change_pointers((void**)&(no1->data), (void**)&(no2->data));
 	change_pointers((void**)&(no1->info), (void**)&(no2->info));
 	change_pointers((void**)&(no1->linkinfo), (void**)&(no2->linkinfo));

@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/09 18:36:02 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 20:10:47 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 20:40:05 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,15 @@ void			print_link(t_node *no, char *path)
 	buf[len] = '\0';
 	ft_putstr(" -> ");
 	ft_putstr(buf);
+}
+
+void			add_dir(char *str, char **dirs)
+{
+	int			i;
+
+	i = 0;
+	while (dirs[i])
+		i++;
+	dirs[i] = ft_strdup(str);
+	dirs[i + 1] = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 16:15:58 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 19:22:41 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 21:57:56 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ t_node				*get_list(DIR *directory, char *dirname)
 		new->str = NULL;
 		new->data = entry;
 		current = new;
-		new->extattr = (listxattr(ft_strjoin(dirname, entry->d_name), buf, 1024, XATTR_NOFOLLOW) > 0) ? 1 : 0;
+		new->extattr = (listxattr(ft_strjoin(dirname, entry->d_name)
+					, buf, 1024, XATTR_NOFOLLOW) > 0) ? 1 : 0;
 		if (lstat((ft_strjoin(dirname, entry->d_name)), &(current->info)) < 0)
 		{
 			perror("");
@@ -76,33 +77,29 @@ t_node				*sort_by_time_modified(t_node *list, t_node *temp)
 
 t_node				*sort_ascii(t_node *list)
 {
-	t_node			*current;
+	t_node			*curr;
 	t_node			*prev;
 	t_node			*temp;
 
-	current = list;
+	curr = list;
 	prev = NULL;
-	while (current->next != NULL)
-		if (ft_strcmp(current->name,
-				current->next->name) > 0)
+	while (curr->next != NULL)
+		if (ft_strcmp(curr->name, curr->next->name) > 0)
 		{
 			if (prev)
-				prev->next = current->next;
+				prev->next = curr->next;
 			else
-				list = current->next;
-			temp = current->next;
-			current->next = current->next->next;
-			temp->next = current;
-			current = list;
+				list = curr->next;
+			temp = curr->next;
+			curr->next = curr->next->next;
+			temp->next = curr;
+			curr = list;
 			prev = NULL;
-/*			change_nodes(current, current->next);
-			current = list;
-			prev = NULL;*/
 		}
 		else
 		{
-			prev = current;
-			current = current->next;
+			prev = curr;
+			curr = curr->next;
 		}
 	return (list);
 }
@@ -130,38 +127,28 @@ t_node				*invert_list(t_node *list)
 
 int					print_list(t_node *list, int *options, char *path)
 {
-	t_node			*current;
-	long int		size_links;
-	long int		size_size;
-	quad_t			total_blocks;
 	int				no;
 	long int		*sizes;
 
-	size_links = 0;
-	size_size = 0;
-	current = list;
-	total_blocks = 0;
 	no = 0;
-	sizes = get_sizes(current, options);
-	if ((options[0] && (current->next->next || options[2])) || options[5])
+	sizes = get_sizes(list, options);
+	if ((options[0] && (list->next->next || options[2])) || options[5])
 	{
 		ft_putstr("total ");
-		print_lld(sizes[2]);
-		ft_putstr("\n");
+		print_lldendl(sizes[2]);
 	}
-	while (current)
+	while (list)
 	{
-		if ((current->name)[0] != '.' || (options[2] == 1))//  || (options[8] == 1
-//														  && ft_strlen(current->name) != 1 && ft_strcmp(current->name, ".."))))
+		if ((list->name)[0] != '.' || (options[2] == 1))
 		{
 			if (options[5])
-				ft_putstr(ft_strjoin(ft_itoa(current->info.st_blocks), " "));
+				ft_putstr(ft_strjoin(ft_itoa(list->info.st_blocks), " "));
 			if (!options[0])
-				ft_putendl(current->name);
+				ft_putendl(list->name);
 			else
-				print_long(current, sizes, options, path);
+				print_long(list, sizes, options, path);
 		}
-		current = current->next;
+		list = list->next;
 		no++;
 	}
 	return (no);
