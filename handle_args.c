@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/07 21:57:28 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 22:58:41 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 23:39:39 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,48 +48,19 @@ t_node			*is_file(char *str, t_node *list, int *options, char **dirs)
 	char		*path;
 	char		*name;
 
-	path = ft_strdup(str);
-	name = ft_strdup(str);
 	if (!ft_strcmp("./", str) || !ft_strcmp("/", str))
-	{
-		add_dir(str, dirs);
-		return (list);
-	}
-	if (strrchr(path, '/'))
-	{
-		name = strrchr(path, '/');
-		*(name++) = '\0';
-		path = ft_strjoin(path, "/");
-	}
-	else
-		path = ft_strdup(".");
+		call_add_dir(str, dirs, list);
+	set_pointers(&path, &name, &str, &directory);
 	ptr = list;
-	directory = opendir(path);
 	curr = get_list(directory, ft_strjoin(path, "/"), options);
 	while (curr)
 	{
-		curr->str = ft_strdup(str);
-		curr->path = path;
 		if (!ft_cmpnocase(str, curr->name) || !ft_cmpnocase(name, curr->name))
 		{
-			if ((options[0] == 0 && ((curr->linkinfo.st_mode)
-				&& (curr->linkinfo.st_mode & S_IFDIR))) || (opendir(str)
-				&& curr->data->d_type == DT_DIR))
+			if (folder_condition(curr, options, str, path))
 				add_dir(str, dirs);
-			else if (list)
-			{
-				while (list->next)
-					list = list->next;
-				list->next = curr;
-				curr->next = NULL;
-				return (ptr);
-			}
 			else
-			{
-				list = curr;
-				list->next = NULL;
-				return (list);
-			}
+				return (add_to_end(list, ptr, curr));
 		}
 		curr = curr->next;
 	}

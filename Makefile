@@ -9,7 +9,8 @@ SRC =	ft_ls.c \
 	print_lld.c \
 	handle_args.c \
 	utils.c \
-	utils2.c
+	utils2.c \
+	utils3.c \
 
 OBJ	= $(SRC:.c=.o)
 

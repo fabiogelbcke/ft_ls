@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 15:51:50 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 22:29:59 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 23:40:15 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,11 @@ void					ls_directory(char *name, int *options,
 									int *has_printed);
 void					print_lldendl(long long int n);
 void					device_or_size(char c, t_node *no);
+void					set_pointers(char **path, char **name,
+									char **str, DIR **directory);
+int						folder_condition(t_node *curr, int *options,
+										char *str, char *path);
+t_node					*add_to_end(t_node *list, t_node *ptr, t_node *curr);
+t_node					*call_add_dir(char *str, char **dirs, t_node *list);
+
 #endif
