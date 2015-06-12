@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 16:29:40 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 20:09:14 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 20:13:26 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ void		print_acc_group_size(t_node *no, long *sizes, char *path)
 	int		i;
 	char	c;
 
-	i = (getpwuid(no->info.st_uid)) ? ft_strlen(getpwuid(no->info.st_uid)->pw_name)
+	i = (getpwuid(no->info.st_uid)) ?
+		ft_strlen(getpwuid(no->info.st_uid)->pw_name)
 		: ft_strlen(ft_itoa(no->info.st_uid));
 	ft_putstr(" ");
 	if (getpwuid(no->info.st_uid))
@@ -107,9 +108,11 @@ void		print_acc_group_size(t_node *no, long *sizes, char *path)
 		ft_putstr(getgrgid(no->info.st_gid)->gr_name);
 	else
 		ft_putnbr(no->info.st_gid);
-	i = (getgrgid(no->info.st_gid)) ? ft_strlen(getgrgid(no->info.st_gid)->gr_name)
+	i = (getgrgid(no->info.st_gid))
+		? ft_strlen(getgrgid(no->info.st_gid)->gr_name)
 		: ft_strlen(ft_itoa(no->info.st_gid));
-	put_spaces(sizes[3] - i + 2 + sizes[1] - ft_strlen(ft_itoa(no->info.st_size)));
+	put_spaces(sizes[3] - i + 2
+			+ sizes[1] - ft_strlen(ft_itoa(no->info.st_size)));
 	c = get_type(no, path);
 	if (c == 'c' || c == 'b')
 	{
