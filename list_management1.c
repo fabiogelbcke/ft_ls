@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 16:15:58 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 15:53:29 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 19:22:41 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ t_node				*get_list(DIR *directory, char *dirname)
 			head = new;
 		new->next = NULL;
 		new->name = ft_strdup(entry->d_name);
-//		ft_putstr(new->name);
 		new->path = NULL;
 		new->str = NULL;
 		new->data = entry;
@@ -144,7 +143,7 @@ int					print_list(t_node *list, int *options, char *path)
 	total_blocks = 0;
 	no = 0;
 	sizes = get_sizes(current, options);
-	if (options[0] && (current->next->next || options[2] == 1))
+	if ((options[0] && (current->next->next || options[2])) || options[5])
 	{
 		ft_putstr("total ");
 		print_lld(sizes[2]);
@@ -152,15 +151,13 @@ int					print_list(t_node *list, int *options, char *path)
 	}
 	while (current)
 	{
-		if ((current->name)[0] != '.' || options[2] == 1)
+		if ((current->name)[0] != '.' || (options[2] == 1))//  || (options[8] == 1
+//														  && ft_strlen(current->name) != 1 && ft_strcmp(current->name, ".."))))
 		{
-//			if (options[5] == 1)
+			if (options[5])
+				ft_putstr(ft_strjoin(ft_itoa(current->info.st_blocks), " "));
 			if (!options[0])
-			{
-				ft_putstr(current->name);
-				ft_putstr("\n");
-			}
-
+				ft_putendl(current->name);
 			else
 				print_long(current, sizes, options, path);
 		}

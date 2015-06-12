@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/09 18:36:02 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 16:45:44 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 19:46:41 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int				*get_options(int ac, char **av)
 {
-    int			i;
-    int			j;
+	int			i;
+	int			j;
 	int			*options;
 
 	options = malloc(sizeof(int) * 8);
@@ -29,14 +29,14 @@ int				*get_options(int ac, char **av)
 		while (av[i][j])
 		{
 			if (!(ft_strrchr("lRart1sT", av[i][j]) ||
-				  !ft_strcmp(av[i], "--")))
+				!ft_strcmp(av[i], "--")))
 			{
 				options[0] = -1;
 				options[1] = av[1][j];
 				return (options);
 			}
-			if (av[i][j] == 'l')
-				options[0] = 1;
+			if (av[i][j] == 'l' || av[i][j] == '1')
+				options[0] = (av[i][j] == 'l') ? 1 : 0;
 			else if (av[i][j] == 'R')
 				options[1] = 1;
 			else if (av[i][j] == 'a')
@@ -73,7 +73,7 @@ char			get_type(t_node *no, char *path)
 	char		buf[512];
 
 	if (!ft_strcmp(".", path))
-        path = ft_strdup("");
+		path = ft_strdup("");
 	if (readlink(ft_strjoin(path, no->name), buf, sizeof(buf)) != -1)
 		return ('l');
 	if (S_ISBLK(no->info.st_mode))

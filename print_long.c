@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 16:29:40 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 17:57:50 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/06/12 19:52:24 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void		print_permissions(t_node *no, int size_links, char *path)
 	ft_putstr((no->info.st_mode & S_IROTH) ? "r" : "-");
 	ft_putstr((no->info.st_mode & S_IWOTH) ? "w" : "-");
 	if (no->info.st_mode & S_ISVTX)
-		
 		ft_putstr((no->info.st_mode & S_IXOTH) ? "t" : "T");
 	else
 		ft_putstr((no->info.st_mode & S_IXOTH) ? "x" : "-");
@@ -45,17 +44,17 @@ void		print_permissions(t_node *no, int size_links, char *path)
 
 char		*remove_extra_spaces(char *str)
 {
-	int i;
-	char *newstr;
-	int j;
+	int		i;
+	char	*newstr;
+	int		j;
 
 	i = 0;
 	j = 0;
-	newstr = malloc(sizeof(char) * (ft_strlen(str) + 1));	
+	newstr = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	while (str[i])
 	{
 		if (str[i] != '\n'
-		    && (i < 15 || str[i] != ' ' || str[i + 1] != ' '))
+			&& (i < 15 || str[i] != ' ' || str[i + 1] != ' '))
 			newstr[j++] = str[i];
 		i++;
 	}
@@ -75,8 +74,7 @@ void		print_time(t_node *no, int *options)
 	timestr = ft_strcpy(timestr, ctime(&sec));
 	if (options[7] == 1)
 	{
-		ft_putstr(ft_strsub(timestr, 4, 20));
-		ft_putstr(" ");
+		ft_putendl(ft_strsub(timestr, 4, 20));
 		return ;
 	}
 	timestr = remove_extra_spaces(timestr);
@@ -90,10 +88,7 @@ void		print_time(t_node *no, int *options)
 		ft_putstr(ft_strsub(timestr, 20, ft_strlen(timestr) - 20));
 	}
 	else
-	{
-		ft_putstr(" ");
-		ft_putstr(ft_strsub(timestr, 11, 5));
-	}
+		ft_putstr(ft_strjoin(" ", ft_strsub(timestr, 11, 5)));
 	ft_putchar(' ');
 }
 
