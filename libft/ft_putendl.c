@@ -12,7 +12,7 @@
 
 #include <unistd.h>
 
-void ft_putendl(char const *s)
+void	ft_putendl(char const *s)
 {
 	int i;
 

@@ -26,6 +26,6 @@ void		ft_putendl_fd(char const *s, int fd)
 		size++;
 		ptr++;
 	}
-	write (fd, s, size);
+	write(fd, s, size);
 	write(fd, "\n", 1);
 }

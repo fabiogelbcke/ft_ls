@@ -37,7 +37,7 @@ t_node				*get_list(DIR *directory, char *dirname, int *options)
 		stat(ft_strjoin(dirname, entry->d_name), &(current->linkinfo));
 	}
 	if (head)
-		head = sort_list (head, options);
+		head = sort_list(head, options);
 	return (directory) ? (head) : (NULL);
 }
 

@@ -21,5 +21,5 @@ void		ft_putstr_fd(char const *s, int fd)
 	ptr = (char*)s;
 	while (*(ptr++))
 		size++;
-	write (fd, s, size);
+	write(fd, s, size);
 }
