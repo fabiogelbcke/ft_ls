@@ -53,7 +53,7 @@ char		**ft_strsplit(char const *s, char c)
 		return (NULL);
 	while (k < numberofwords(s, c))
 	{
-		size = getsize(&i, s, c, size);
+		size = getsize(&i, s, c, 0);
 		table[k] = (char*)malloc((size + 1) * sizeof(char));
 		i--;
 		size = 0;

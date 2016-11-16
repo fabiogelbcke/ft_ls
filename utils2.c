@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/12 21:12:57 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/13 00:34:50 by fschuber         ###   ########.fr       */
+/*   Updated: 2016/11/16 14:39:54 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void			ls_directory(char *name, int *options, int *has_printed)
 				, items, options);
 		ls_directories(dir_list, options, has_printed);
 	}
+	closedir(directory);
 }
 
 void			sort_dirs(char **dirs, int *options)
