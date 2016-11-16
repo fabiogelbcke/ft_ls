@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/12 21:12:57 by fschuber          #+#    #+#             */
-/*   Updated: 2016/11/16 14:39:54 by fschuber         ###   ########.fr       */
+/*   Updated: 2016/11/16 15:29:52 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@ void			ls_directory(char *name, int *options, int *has_printed)
 
 	directory = opendir(name);
 	if (!directory)
-	{
 		perror("ft_ls:");
+	if (!directory)
 		return ;
-	}
 	path = (name[0] != '/' && name[0] != '~') ?
 		ft_strjoin(ft_strjoin("./", name), "/") : ft_strjoin(name, "/");
 	list = get_list(directory, path, options);
