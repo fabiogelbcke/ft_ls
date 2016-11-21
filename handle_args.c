@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/07 21:57:28 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/13 00:35:38 by fschuber         ###   ########.fr       */
+/*   Updated: 2016/11/21 15:10:59 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ void			print_files(t_node *list, int *options, int *has_printed)
 		*has_printed = 1;
 		if (errno == 13)
 		{
-			ft_putstr("oi");
 			perror(ft_strjoin("ls: ", ptr->name));
 		}
 		ptr = ptr->next;

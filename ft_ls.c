@@ -6,7 +6,7 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/12 21:10:26 by fschuber          #+#    #+#             */
-/*   Updated: 2015/06/12 21:53:04 by fschuber         ###   ########.fr       */
+/*   Updated: 2016/11/21 15:12:40 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,12 @@ void			handle_args(int ac, char **av, int *options, int *has_printed)
 			errors[j++] = ft_strdup(av[i + options[6]]);
 	errors[j] = NULL;
 	i = -1;
-	dirs = malloc(sizeof(char*) * (ac));
+	dirs = ft_memalloc(sizeof(char*) * (ac));
 	while (++i + options[6] < ac)
 		not_error = is_file(av[i + options[6]], not_error, options, dirs);
 	print_errors(errors, has_printed);
 	if (not_error)
 		not_error = sort_ascii(not_error);
-	if (options[3])
-		not_error = invert_list(not_error);
 	print_files(not_error, options, has_printed);
 	print_dirs(ac, dirs, options, has_printed);
 }

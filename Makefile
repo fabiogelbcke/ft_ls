@@ -30,9 +30,11 @@ test:
 
 clean:
 	rm -f $(OBJ)
+	$(MAKE) -C ./libft clean
 
 fclean:	clean
 	rm -f $(NAME)
+	$(MAKE) -C ./libft fclean
 
 re: fclean all
 
